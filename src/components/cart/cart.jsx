@@ -17,27 +17,18 @@ export const Cart = ({ cart, setCart, convertPrice }) => {
   const handleQuantity = (type, id, quantity) => {
     const found = cart.filter((el) => el.id === id)[0];
     const idx = cart.indexOf(found);
-
+    const cartItem = {
+      id: found.id,
+      image: found.image,
+      name: found.name,
+      quantity: quantity,
+      price: found.price,
+      provider: found.provider,
+    };
     if (type === "plus") {
-      const cartItem = {
-        id: found.id,
-        image: found.image,
-        name: found.name,
-        quantity: quantity,
-        price: found.price,
-        provider: found.provider,
-      };
       setCart([...cart.slice(0, idx), cartItem, ...cart.slice(idx + 1)]);
     } else {
       if (quantity === 0) return;
-      const cartItem = {
-        id: found.id,
-        image: found.image,
-        name: found.name,
-        quantity: quantity,
-        price: found.price,
-        provider: found.provider,
-      };
       setCart([...cart.slice(0, idx), cartItem, ...cart.slice(idx + 1)]);
     }
   };
@@ -64,7 +55,6 @@ export const Cart = ({ cart, setCart, convertPrice }) => {
       setCheckLists([]);
     }
   };
-
   return (
     <>
       <CartHeader isAllChecked={isAllChecked} handleCheckAll={handleCheckAll} />

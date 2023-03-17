@@ -7,6 +7,7 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [count, setCount] = useState(1);
+  const [converNum, setConvert] = useState("");
 
   // 상세페이지에서 물건 수량 조절
   const handleQuantity = (type) => {
@@ -19,18 +20,16 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
   };
 
   // 장바구니에 중복된 물건을 담을 때 사용
-  const setQuantity = (id, quantity) => {
-    const found = cart.filter((el) => el.id === id)[0];
-    const idx = cart.indexOf(found);
-    const cartItem = {
-      id: product.id,
-      image: product.image,
-      name: product.name,
-      quantity: quantity,
-      price: product.price,
-      provider: product.provider,
-    };
-    setCart([...cart.slice(0, idx), cartItem, ...cart.slice(idx + 1)]);
+  const setQuantity = (id, quantity, cartItem) => {
+    const found2 = cart.filter((el) => el.id === id)[0];
+    const idx = cart.indexOf(found2);
+    //found2가 배열의 어느 위치에 있는 지 찾아줌
+    const addQuantity = cartItem;
+    addQuantity.quantity = quantity;
+    setCart([...cart.slice(0, idx), addQuantity, ...cart.slice(idx + 1)]);
+    //...cart.slice(0,idx) 는 0 부터 idx 이전까지 추출하여 새로운 배열을 만들어냄 // 0에서 해당까지 자른다는게 아님
+    //...cart.slice(idx+1,end 안써주기 때문에 끝까지)
+    // 첫번째가 idx 전까지 이기 때문에 넣고, addQiantity라고 idx를 넣어주고 나머지 idx + 1 부터 끝까지 마지막으로 넣어줌
   };
 
   const handleCart = () => {
@@ -43,15 +42,18 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
       provider: product.provider,
     };
     const found = cart.find((el) => el.id === cartItem.id);
-    if (found) setQuantity(cartItem.id, found.quantity + count);
+    if (found !== undefined)
+      setQuantity(found.id, found.quantity + count, cartItem);
     else setCart([...cart, cartItem]);
   };
 
   useEffect(() => {
     getProducts().then((data) => {
-      setProduct(
-        data.data.products.find((product) => product.id === parseInt(id))
+      const result = data.data.products.find(
+        (product) => product.id === parseInt(id)
       );
+      setConvert(convertPrice(result.price));
+      setProduct(result);
     });
   }, [id, product.price]);
 
@@ -69,7 +71,7 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
               <p className={styles.seller_store}>{product.provider}</p>
               <p className={styles.product_name}>{product.name}</p>
               <span className={styles.price}>
-                {convertPrice(product.price + "")}
+                {converNum}
                 <span className={styles.unit}>원</span>
               </span>
             </div>
