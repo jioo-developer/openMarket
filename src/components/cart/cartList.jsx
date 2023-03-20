@@ -1,12 +1,11 @@
 import styles from "./cart.module.css";
 
-export const CartList = ({
+const CartList = ({
   cart,
   convertPrice,
-  checkLists,
   handleQuantity,
   handleRemove,
-  handleCheckList,
+  handlerCheckList,
 }) => {
   return (
     <section className={styles.cart_product_list}>
@@ -14,9 +13,8 @@ export const CartList = ({
         type="checkbox"
         id={cart.id}
         onChange={(e) => {
-          handleCheckList(e.currentTarget.checked, `${cart.id}`);
+          handlerCheckList(e.currentTarget.checked, e.target.id);
         }}
-        checked={checkLists.includes(`${cart.id}`) ? true : false}
       />
       <div className={styles.cart_product_wrap}>
         <div className={styles.cart_product_image}>
@@ -66,3 +64,5 @@ export const CartList = ({
     </section>
   );
 };
+
+export default CartList;

@@ -1,19 +1,12 @@
 import styles from "./cart.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartHeader } from "./cartHeader";
-import { CartList } from "./cartList";
+import CartList from "./cartList";
 import { TotalCart } from "./totalCart";
 
 const Cart = ({ cart, setCart, convertPrice }) => {
   const [total, setTotal] = useState(0);
   const [checkLists, setCheckLists] = useState([]);
-  const isAllChecked =
-    cart.length === checkLists.length && checkLists.length !== 0;
-
-  const found = checkLists.map((checkList) =>
-    cart.filter((el) => el.id === parseInt(checkList))
-  );
-
   const handleQuantity = (type, id, quantity) => {
     const found = cart.filter((el) => el.id === id)[0];
     const idx = cart.indexOf(found);
@@ -35,29 +28,20 @@ const Cart = ({ cart, setCart, convertPrice }) => {
 
   const handleRemove = (id) => {
     setCart(cart.filter((cart) => cart.id !== id));
-    setCheckLists(checkLists.filter((check) => parseInt(check) !== id));
   };
 
-  const handleCheckList = (checked, id) => {
+  const handlerCheckList = (checked, id) => {
     if (checked) {
       setCheckLists([...checkLists, id]);
     } else {
-      setCheckLists(checkLists.filter((check) => check !== id));
+      setCheckLists(checkLists.filter((item) => item !== id));
+      //filter 안의 item parameter와 id가 같지 않은 것만 남긴다 = 같은 거 삭제
     }
   };
 
-  const handleCheckAll = (checked) => {
-    if (checked) {
-      const checkItems = [];
-      cart.map((cart) => checkItems.push(`${cart.id}`));
-      setCheckLists(checkItems);
-    } else {
-      setCheckLists([]);
-    }
-  };
   return (
     <>
-      <CartHeader isAllChecked={isAllChecked} handleCheckAll={handleCheckAll} />
+      <CartHeader />
       {cart.length !== 0 ? (
         cart.map((cart) => {
           return (
@@ -67,9 +51,8 @@ const Cart = ({ cart, setCart, convertPrice }) => {
               setCart={setCart}
               convertPrice={convertPrice}
               handleQuantity={handleQuantity}
+              handlerCheckList={handlerCheckList}
               handleRemove={handleRemove}
-              handleCheckList={handleCheckList}
-              checkLists={checkLists}
             />
           );
         })
@@ -85,7 +68,7 @@ const Cart = ({ cart, setCart, convertPrice }) => {
           total={total}
           setTotal={setTotal}
           convertPrice={convertPrice}
-          found={found}
+          // found={found}
         />
       ) : null}
     </>
