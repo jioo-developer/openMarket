@@ -4,7 +4,7 @@ import { EventBanner } from "../eventBanner/eventBanner";
 import { Product } from "../products/product";
 import { getProducts } from "../../service/fetcher";
 
-export const Main = ({ convertPrice, products, setProducts }) => {
+const Main = ({ convertPrice, products, setProducts }) => {
   const sortProduct = (type) => {
     if (type === "recent") {
       const newProduct = [...products];
@@ -26,6 +26,7 @@ export const Main = ({ convertPrice, products, setProducts }) => {
       setProducts(data.data.products);
     });
   }, [setProducts]);
+
   return (
     <>
       <EventBanner />
@@ -48,3 +49,5 @@ export const Main = ({ convertPrice, products, setProducts }) => {
     </>
   );
 };
+
+export default Main;

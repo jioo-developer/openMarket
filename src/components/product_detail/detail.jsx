@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProducts } from "../../service/fetcher";
 
-export const Detail = ({ convertPrice, cart, setCart }) => {
+const Detail = ({ convertPrice, cart, setCart }) => {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const [producting, setProduct] = useState({});
   const [count, setCount] = useState(1);
   const [converNum, setConvert] = useState("");
 
@@ -34,12 +34,12 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
 
   const handleCart = () => {
     const cartItem = {
-      id: product.id,
-      image: product.image,
-      name: product.name,
+      id: producting.id,
+      image: producting.image,
+      name: producting.name,
       quantity: count,
-      price: product.price,
-      provider: product.provider,
+      price: producting.price,
+      provider: producting.provider,
     };
     const found = cart.find((el) => el.id === cartItem.id);
     if (found !== undefined)
@@ -55,21 +55,21 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
       setConvert(convertPrice(result.price));
       setProduct(result);
     });
-  }, [id, product.price]);
+  }, [id, producting.price]);
 
   return (
-    product && (
+    producting && (
       <>
         <main className={styles.main}>
           <section className={styles.product}>
             <div className={styles.product_img}>
-              <img src={product.image} alt="product" />
+              <img src={producting.image} alt="product" />
             </div>
           </section>
           <section className={styles.product}>
             <div className={styles.product_info}>
-              <p className={styles.seller_store}>{product.provider}</p>
-              <p className={styles.product_name}>{product.name}</p>
+              <p className={styles.seller_store}>{producting.provider}</p>
+              <p className={styles.product_name}>{producting.name}</p>
               <span className={styles.price}>
                 {converNum}
                 <span className={styles.unit}>원</span>
@@ -114,7 +114,7 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
                   총 수량 <span className={styles.total_count}>{count}개</span>
                 </span>
                 <span className={styles.total_price}>
-                  {convertPrice(product.price * count)}
+                  {convertPrice(producting.price * count)}
                   <span className={styles.total_unit}>원</span>
                 </span>
               </div>
@@ -137,3 +137,5 @@ export const Detail = ({ convertPrice, cart, setCart }) => {
     )
   );
 };
+
+export default Detail;

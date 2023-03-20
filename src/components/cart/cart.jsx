@@ -4,7 +4,7 @@ import { CartHeader } from "./cartHeader";
 import { CartList } from "./cartList";
 import { TotalCart } from "./totalCart";
 
-export const Cart = ({ cart, setCart, convertPrice }) => {
+const Cart = ({ cart, setCart, convertPrice }) => {
   const [total, setTotal] = useState(0);
   const [checkLists, setCheckLists] = useState([]);
   const isAllChecked =
@@ -87,9 +87,9 @@ export const Cart = ({ cart, setCart, convertPrice }) => {
           convertPrice={convertPrice}
           found={found}
         />
-      ) : (
-        ""
-      )}
+      ) : null}
     </>
   );
 };
+
+export default Cart;

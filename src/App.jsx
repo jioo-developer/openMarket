@@ -2,9 +2,9 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { TopNavigationBar } from "./components/header/topNavigationBar/topNavigationBar";
-import Home from "./pages/home";
-import Product from "./pages/product";
-import Basket from "./pages/basket";
+import Main from "./components/main/main";
+import Detail from "./components/product_detail/detail";
+import Cart from "./components/cart/cart";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -21,7 +21,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Home
+            <Main
               convertPrice={convertPrice}
               products={products}
               setProducts={setProducts}
@@ -31,17 +31,13 @@ function App() {
         <Route
           path="/product/:id"
           element={
-            <Product
-              convertPrice={convertPrice}
-              cart={cart}
-              setCart={setCart}
-            />
+            <Detail convertPrice={convertPrice} cart={cart} setCart={setCart} />
           }
         />
         <Route
           path="/cart"
           element={
-            <Basket cart={cart} setCart={setCart} convertPrice={convertPrice} />
+            <Cart cart={cart} setCart={setCart} convertPrice={convertPrice} />
           }
         />
       </Routes>
