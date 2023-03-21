@@ -11,6 +11,7 @@ export const CartHeader = (props) => {
           <input
             type="checkbox"
             onChange={(e) => props.AllChecked(e.target.checked)}
+            checked={props.isAllChecked}
           />
           <span>상품정보</span>
           <span>수량</span>

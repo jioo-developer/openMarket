@@ -14,9 +14,9 @@ const CartList = ({
         type="checkbox"
         id={cart.id}
         onChange={(e) => {
-          handlerCheckList(e.currentTarget.checked, e.target.id);
+          handlerCheckList(e.currentTarget.checked, parseInt(e.target.id));
         }}
-        checked={checkLists.includes(parseInt(cart.id)) ? true : false}
+        checked={checkLists.includes(cart.id) ? true : false}
       />
       <div className={styles.cart_product_wrap}>
         <div className={styles.cart_product_image}>

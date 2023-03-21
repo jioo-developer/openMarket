@@ -56,9 +56,13 @@ const Cart = ({ cart, setCart, convertPrice }) => {
     console.log(checkLists);
   }, [checkLists]);
 
+  const isAllChecked =
+    cart.length === checkLists.length && checkLists.length !== 0;
+  //전체를 체크 해야되니 :  장바구니에 저장된 데이터의 값과 체크된 갯수가 같으면서 체크리스트의 갯수가 0개가 아닐때
+
   return (
     <>
-      <CartHeader AllChecked={AllChecked} />
+      <CartHeader AllChecked={AllChecked} isAllChecked={isAllChecked} />
       {cart.length !== 0 ? (
         cart.map((cart) => {
           return (
