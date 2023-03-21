@@ -6,6 +6,7 @@ const CartList = ({
   handleQuantity,
   handleRemove,
   handlerCheckList,
+  checkLists,
 }) => {
   return (
     <section className={styles.cart_product_list}>
@@ -15,6 +16,7 @@ const CartList = ({
         onChange={(e) => {
           handlerCheckList(e.currentTarget.checked, e.target.id);
         }}
+        checked={checkLists.includes(parseInt(cart.id)) ? true : false}
       />
       <div className={styles.cart_product_wrap}>
         <div className={styles.cart_product_image}>
@@ -25,7 +27,7 @@ const CartList = ({
           <p className={styles.seller_store}>{cart.provider}</p>
           <p className={styles.product_name}>{cart.name}</p>
           <p className={styles.price}>{convertPrice(cart.price)}원</p>
-          <p className={styles.delivery}>택배배송 / 무료배송</p>
+          <p className={styles.delivery}>택배배송</p>
         </div>
       </div>
 

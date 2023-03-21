@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CartHeader } from "./cartHeader";
 import CartList from "./cartList";
 import { TotalCart } from "./totalCart";
+import CartCoupon from "./cartCoupon";
 
 const Cart = ({ cart, setCart, convertPrice }) => {
   const [total, setTotal] = useState(0);
@@ -39,9 +40,25 @@ const Cart = ({ cart, setCart, convertPrice }) => {
     }
   };
 
+  const AllChecked = (checked) => {
+    if (checked) {
+      const clearItem = [];
+      cart.forEach((element) => {
+        clearItem.push(element.id);
+        setCheckLists([...clearItem]);
+      });
+    } else {
+      setCheckLists([]);
+    }
+  };
+
+  useEffect(() => {
+    console.log(checkLists);
+  }, [checkLists]);
+
   return (
     <>
-      <CartHeader />
+      <CartHeader AllChecked={AllChecked} />
       {cart.length !== 0 ? (
         cart.map((cart) => {
           return (
@@ -53,6 +70,7 @@ const Cart = ({ cart, setCart, convertPrice }) => {
               handleQuantity={handleQuantity}
               handlerCheckList={handlerCheckList}
               handleRemove={handleRemove}
+              checkLists={checkLists}
             />
           );
         })
@@ -62,14 +80,17 @@ const Cart = ({ cart, setCart, convertPrice }) => {
           <p>원하는 상품을 장바구니에 담아보세요!</p>
         </div>
       )}
+
       {cart.length !== 0 ? (
-        <TotalCart
-          cart={cart}
-          total={total}
-          setTotal={setTotal}
-          convertPrice={convertPrice}
-          // found={found}
-        />
+        <>
+          <CartCoupon />
+          <TotalCart
+            cart={cart}
+            total={total}
+            setTotal={setTotal}
+            convertPrice={convertPrice}
+          />
+        </>
       ) : null}
     </>
   );

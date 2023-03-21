@@ -216,7 +216,7 @@
   height: 150px;
   background: #f2f2f2;
   border-radius: 10px;
-  margin: 0 auto;
+  margin: 0 auto 100px auto;
   margin-top: 35px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -440,4 +440,33 @@
   .cart_product_info {
     width: initial;
   }
+}
+
+.couponBtn {
+  box-sizing: border-box;
+  height: 36px;
+  margin: 20px 0 15px 0;
+  padding: 0 12px;
+  border-radius: 2px;
+  border: solid 1px #19ce60;
+  background-color: #fff;
+  font-size: 14px;
+  line-height: 35px;
+  text-align: center;
+  white-space: nowrap;
+  color: #5f816c;
+  outline: 0;
+  width: 100%;
+  max-width: 280px;
+  cursor: pointer;
+}
+
+.cart_couponWrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
