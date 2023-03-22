@@ -1,26 +1,72 @@
 import styles from "./cart.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const TotalCart = ({ total, setTotal, cart, convertPrice }) => {
+export const TotalCart = ({
+  total,
+  setTotal,
+  cart,
+  convertPrice,
+  randomNum,
+  buyitem,
+}) => {
+  const [initialPrice, setInitial] = useState(0);
+  const [delivery, setDelivery] = useState(3000);
+  useEffect(() => {
+    if (buyitem.length !== 0) {
+      const sum = buyitem.map((item) => item[0].price * item[0].quantity);
+      const reducer = (acc, cur) => acc + cur;
+      const itemTotal = sum.reduce(reducer);
+      if (itemTotal <= 0) {
+        setTotal(0);
+      } else {
+        setInitial(itemTotal);
+        if (randomNum > 0) {
+          const discount =
+            itemTotal - Math.round(itemTotal * (randomNum / 100));
+          if (discount > 30000) {
+            setTotal(discount);
+          } else {
+            setTotal(discount + delivery);
+          }
+        } else {
+          if (itemTotal > 30000) {
+            setTotal(itemTotal);
+          } else {
+            setTotal(itemTotal + delivery);
+          }
+        }
+      }
+    } else {
+      setTotal(0);
+      setInitial(0);
+    }
+  }, [buyitem, cart, total, setTotal]);
   return (
     <div className={styles.total}>
       <div className={styles.total_price}>
         <p className={styles.cart_product_total_price}>총 상품금액</p>
-        <p className={styles.cart_product_price}>{convertPrice(total)}</p>
+        <p className={styles.cart_product_price}>
+          {convertPrice(initialPrice)}
+        </p>
       </div>
       <div className={styles.pay_minus}>
         <img src="/images/icon-minus-line.svg" alt="minus" />
       </div>
       <div className={styles.sale}>
         <p className={styles.cart_product_sale}>상품 할인</p>
-        <p className={styles.cart_product_sale_price}>0원</p>
+        <p className={styles.cart_product_sale_price}>
+          {randomNum}
+          {randomNum <= 0 ? "" : "%"}
+        </p>
       </div>
       <div className={styles.pay_plus}>
         <img src="/images/icon-plus-line.svg" alt="plus" />
       </div>
       <div className={styles.delivery}>
         <p className={styles.cart_product_delivery}>배송비</p>
-        <p className={styles.cart_product_delivery_price}>0원</p>
+        <p className={styles.cart_product_delivery_price}>
+          {total > 30000 ? 0 : delivery}
+        </p>
       </div>
 
       <div className={styles.payment}>

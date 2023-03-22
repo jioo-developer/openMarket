@@ -8,6 +8,7 @@ import CartCoupon from "./cartCoupon";
 const Cart = ({ cart, setCart, convertPrice }) => {
   const [total, setTotal] = useState(0);
   const [checkLists, setCheckLists] = useState([]);
+  const [randomNum, setRandom] = useState(0);
   const handleQuantity = (type, id, quantity) => {
     const found = cart.filter((el) => el.id === id)[0];
     const idx = cart.indexOf(found);
@@ -52,9 +53,27 @@ const Cart = ({ cart, setCart, convertPrice }) => {
     }
   };
 
+  const coupon = () => {
+    if (randomNum === 0) {
+      const num = Math.floor(Math.random() * (10 - 5) + 5);
+      setRandom(num);
+      localStorage.setItem("couponNum", num);
+      alert(`${num}% 할인 쿠폰이 발급되었습니다`);
+    } else {
+      return randomNum;
+    }
+  };
+
   useEffect(() => {
-    console.log(checkLists);
-  }, [checkLists]);
+    const isCoupon = localStorage.getItem("couponNum");
+    if (isCoupon !== null) {
+      setRandom(isCoupon);
+    }
+  }, []);
+
+  const buyitem = checkLists.map((item) => {
+    return cart.filter((el) => el.id === item);
+  });
 
   const isAllChecked =
     cart.length === checkLists.length && checkLists.length !== 0;
@@ -87,13 +106,20 @@ const Cart = ({ cart, setCart, convertPrice }) => {
 
       {cart.length !== 0 ? (
         <>
-          <CartCoupon />
+          <CartCoupon coupon={coupon} />
           <TotalCart
             cart={cart}
             total={total}
             setTotal={setTotal}
             convertPrice={convertPrice}
+            randomNum={randomNum}
+            buyitem={buyitem}
           />
+          <div className={styles.cart_couponWrap}>
+            <p className={styles.total_discount}>
+              상품 할인에 배송비는 포함 되지 않습니다.
+            </p>
+          </div>
         </>
       ) : null}
     </>

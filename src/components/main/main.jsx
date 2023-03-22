@@ -1,21 +1,18 @@
 import styles from "./main.module.css";
 import { useEffect } from "react";
-import { EventBanner } from "../eventBanner/eventBanner";
 import { Product } from "../products/product";
 import { getProducts } from "../../service/fetcher";
 
 const Main = ({ convertPrice, products, setProducts }) => {
   const sortProduct = (type) => {
+    const newProduct = [...products];
     if (type === "recent") {
-      const newProduct = [...products];
       newProduct.sort((a, b) => a.id - b.id);
       setProducts(newProduct);
     } else if (type === "row") {
-      const newProduct = [...products];
       newProduct.sort((a, b) => a.price - b.price);
       setProducts(newProduct);
     } else if (type === "high") {
-      const newProduct = [...products];
       newProduct.sort((a, b) => b.price - a.price);
       setProducts(newProduct);
     }
@@ -29,7 +26,6 @@ const Main = ({ convertPrice, products, setProducts }) => {
 
   return (
     <>
-      <EventBanner />
       <div className={styles.filter}>
         <p onClick={() => sortProduct("recent")}>최신순</p>
         <p onClick={() => sortProduct("row")}>낮은 가격</p>

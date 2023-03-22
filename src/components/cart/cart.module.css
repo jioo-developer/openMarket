@@ -216,7 +216,7 @@
   height: 150px;
   background: #f2f2f2;
   border-radius: 10px;
-  margin: 0 auto 100px auto;
+  margin: 0 auto;
   margin-top: 35px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -469,4 +469,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.total_discount {
+  margin-left: auto;
+  margin: 10px 0 100px auto;
+  display: inline-block;
 }
