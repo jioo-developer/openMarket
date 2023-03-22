@@ -10,7 +10,7 @@ export const TotalCart = ({
   buyitem,
 }) => {
   const [initialPrice, setInitial] = useState(0);
-  const [delivery, setDelivery] = useState(3000);
+  const delivery = 3000;
   useEffect(() => {
     if (buyitem.length !== 0) {
       const sum = buyitem.map((item) => item[0].price * item[0].quantity);
@@ -23,13 +23,13 @@ export const TotalCart = ({
         if (randomNum > 0) {
           const discount =
             itemTotal - Math.round(itemTotal * (randomNum / 100));
-          if (discount > 30000) {
+          if (discount > delivery * 10) {
             setTotal(discount);
           } else {
             setTotal(discount + delivery);
           }
         } else {
-          if (itemTotal > 30000) {
+          if (itemTotal > delivery * 10) {
             setTotal(itemTotal);
           } else {
             setTotal(itemTotal + delivery);
@@ -40,7 +40,7 @@ export const TotalCart = ({
       setTotal(0);
       setInitial(0);
     }
-  }, [buyitem, cart, total, setTotal]);
+  }, [buyitem, cart, total, setTotal, randomNum]);
   return (
     <div className={styles.total}>
       <div className={styles.total_price}>
@@ -65,7 +65,7 @@ export const TotalCart = ({
       <div className={styles.delivery}>
         <p className={styles.cart_product_delivery}>배송비</p>
         <p className={styles.cart_product_delivery_price}>
-          {total > 30000 ? 0 : delivery}
+          {total > delivery * 10 ? 0 : delivery}
         </p>
       </div>
 
