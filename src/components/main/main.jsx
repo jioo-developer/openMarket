@@ -22,7 +22,7 @@ const Main = ({ convertPrice, products, setProducts }) => {
     getProducts().then((data) => {
       setProducts(data.data.products);
     });
-  }, [setProducts]);
+  }, []);
 
   return (
     <>
